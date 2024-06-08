@@ -12,6 +12,7 @@
   "author": "Sanjay M (https://github.com/ms4n)",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "connect-redis": "^7.1.1",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
@@ -19,6 +20,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "google-auth-library": "^9.10.0",
+    "googleapis": "^140.0.0",
     "ioredis": "^5.4.1",
     "nodemon": "^3.1.3",
     "passport": "^0.7.0",
