@@ -12,8 +12,12 @@ const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  proxy: true,
+  name: "ExpressCookie",
   cookie: {
-    secure: false,
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
     maxAge: 58 * 60 * 1000, // 58 minutes
   },
 });
