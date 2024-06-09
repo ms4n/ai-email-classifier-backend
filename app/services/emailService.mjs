@@ -90,8 +90,6 @@ export async function fetchEmailData(accessToken, messageId) {
       } catch (error) {
         console.error("Error decoding Base64 email body:", error);
       }
-    } else {
-      console.warn("No HTML part found in the email.");
     }
 
     const requiredEmailData = {

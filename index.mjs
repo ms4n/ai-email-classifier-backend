@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 import sessionMiddleware from "./config/session.mjs";
 import passport from "./config/passport.mjs";
-import authRoutes from "./app/routes/authRoutes.mjs";
+import allRoutes from "./app/routes/allRoutes.mjs";
 
 dotenv.config();
 
@@ -25,7 +25,7 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(authRoutes);
+app.use(allRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).send("Server is running successfully!");

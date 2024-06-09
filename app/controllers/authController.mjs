@@ -7,7 +7,7 @@ export const googleAuth = passport.authenticate("google", {
 });
 
 export const googleCallback = passport.authenticate("google", {
-  failureRedirect: process.env.FRONTEND_URL,
+  failureRedirect: `${process.env.FRONTEND_URL}/`,
 });
 
 export const logout = (req, res, next) => {
@@ -51,7 +51,9 @@ export const getEmails = async (req, res) => {
 
     const accessToken = req.user.accessToken;
 
-    const emails = await fetchAllEmailData(accessToken, 3);
+    const emailCount = parseInt(req.query.count, 10);
+
+    const emails = await fetchAllEmailData(accessToken, emailCount);
     res.status(200).json(emails);
   } catch (error) {
     console.error("Error fetching emails:", error);
