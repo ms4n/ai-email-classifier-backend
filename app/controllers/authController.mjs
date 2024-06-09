@@ -7,7 +7,7 @@ export const googleAuth = passport.authenticate("google", {
 });
 
 export const googleCallback = passport.authenticate("google", {
-  failureRedirect: "http://localhost:3000/",
+  failureRedirect: process.env.FRONTEND_URL,
 });
 
 export const logout = (req, res, next) => {
@@ -40,14 +40,6 @@ export const getUser = (req, res) => {
     });
   } else {
     res.status(200).json({ authenticated: false });
-  }
-};
-
-export const protectedRoute = (req, res) => {
-  if (req.isAuthenticated()) {
-    res.send("This is a protected route");
-  } else {
-    res.redirect("/auth/google");
   }
 };
 
