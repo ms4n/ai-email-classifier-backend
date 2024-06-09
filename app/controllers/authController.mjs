@@ -1,5 +1,5 @@
 import passport from "passport";
-import { fetchOneEmail } from "../services/emailService.mjs";
+import { fetchAllEmailData } from "../services/emailService.mjs";
 
 export const googleAuth = passport.authenticate("google", {
   scope: ["profile", "email", "https://www.googleapis.com/auth/gmail.readonly"],
@@ -59,7 +59,7 @@ export const getEmails = async (req, res) => {
 
     const accessToken = req.user.accessToken;
 
-    const emails = await fetchOneEmail(accessToken);
+    const emails = await fetchAllEmailData(accessToken, 3);
     res.status(200).json(emails);
   } catch (error) {
     console.error("Error fetching emails:", error);
