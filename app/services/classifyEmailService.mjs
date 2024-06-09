@@ -2,8 +2,16 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { ChatOpenAI } from "@langchain/openai";
 import { z } from "zod";
 
-export async function classifyEmail(email) {
+export async function classifyEmail(email, openAiApiKey) {
   try {
+    const model =
+      openAiApiKey.toLowerCase() === "gpt3" ? "gpt-3.5-turbo-0125" : "gpt-4o";
+
+    const apiKey =
+      openAiApiKey.toLowerCase() === "gpt3"
+        ? process.env.OPENAI_API_KEY
+        : openAiApiKey;
+
     const classificationSchema = z.object({
       label: z
         .enum([
@@ -41,8 +49,8 @@ export async function classifyEmail(email) {
 
     const llm = new ChatOpenAI({
       temperature: 0,
-      //   model: "gpt-3.5-turbo-0125",
-      model: "gpt-4o",
+      model: model,
+      apiKey: apiKey,
     });
 
     const llmWithStructuredOutput = llm.withStructuredOutput(
