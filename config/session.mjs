@@ -18,6 +18,8 @@ const sessionMiddleware = session({
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    domain: ".tidymail.xyz",
+    path: "/",
     maxAge: 58 * 60 * 1000, // 58 minutes
   },
 });
