@@ -5,7 +5,7 @@ import { z } from "zod";
 export async function classifyEmail(email, openAiApiKey) {
   try {
     const model = "gpt-4o-mini";
-    const apiKey = openAiApiKey || process.env.OPENAI_API_KEY;
+    const apiKey = process.env.OPENAI_API_KEY;
 
     const classificationSchema = z.object({
       label: z
