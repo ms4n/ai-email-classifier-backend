@@ -16,9 +16,9 @@ const sessionMiddleware = session({
   name: "ExpressCookie",
   cookie: {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 58 * 60 * 1000, // 58 minutes
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 58 * 60 * 1000,
   },
 });
 

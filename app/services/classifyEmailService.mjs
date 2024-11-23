@@ -2,9 +2,9 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { ChatOpenAI } from "@langchain/openai";
 import { z } from "zod";
 
-export async function classifyEmail(email, openAiApiKey) {
+export async function classifyEmail(email) {
   try {
-    const model = "gpt-4o-mini";
+    const model = "gpt-4o";
     const apiKey = process.env.OPENAI_API_KEY;
 
     const classificationSchema = z.object({
@@ -23,22 +23,54 @@ export async function classifyEmail(email, openAiApiKey) {
     });
 
     const taggingPrompt = ChatPromptTemplate.fromTemplate(
-      `Classify the email into one of the following categories:
-  
-        - Important: Emails that are personal or work-related and require immediate attention.
-        - Promotions: Emails related to sales, discounts, and marketing campaigns.
-        - Social: Emails from social networks, friends, and family.
-        - Marketing: Emails related to marketing, newsletters, and notifications.
-        - Spam: Unwanted or unsolicited emails.
-        - General: If none of the above are matched, use General.
+      `Classify the following email into exactly one of these categories. Consider both the subject and content carefully:
+
+        1. Important:
+           - Work-related emails requiring action (meetings, deadlines, assignments)
+           - Financial notifications (bills, payments, banking)
+           - Official communications (legal, government, school)
+           - Time-sensitive personal matters
         
-        Email Subject:
-        {email_subject}
+        2. Social:
+           - Messages from social networks (Facebook, Twitter, LinkedIn)
+           - Personal communications from friends/family
+           - Event invitations and RSVPs
+           - Social media notifications and updates
         
-        Email Snippet:
-        {email_snippet}
+        3. Promotions:
+           - Sales and discount offers
+           - Product promotions
+           - Limited time deals
+           - Shopping-related emails
         
-        Respond with a single category label.
+        4. Marketing:
+           - Newsletters
+           - Company updates and announcements
+           - Product launches
+           - Blog posts and content updates
+           - Non-promotional business communications
+        
+        5. Spam:
+           - Unsolicited advertisements
+           - Phishing attempts
+           - Suspicious sender addresses
+           - Excessive use of urgency or pressure tactics
+           - Unrequested services or products
+        
+        6. General:
+           - Routine notifications and updates
+           - Confirmations and receipts
+           - Any email that doesn't clearly fit the above categories
+
+        Email Subject: {email_subject}
+        
+        Email Snippet: {email_snippet}
+        
+        Instructions:
+        1. Analyze both subject and content
+        2. Select the MOST appropriate category
+        3. Respond with only one category name from the list above
+        4. If in doubt between categories, prioritize Important > Social > Promotions > Marketing > General > Spam
         `
     );
 

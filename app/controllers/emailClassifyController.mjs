@@ -2,16 +2,12 @@ import { classifyEmail } from "../services/classifyEmailService.mjs";
 
 export const classifyEmails = async (req, res) => {
   try {
-    const { emails, openAiApiKey } = req.body;
+    const { emails } = req.body;
 
     // Check if emails is an array
     if (!Array.isArray(emails)) {
       console.error("Invalid format for emails:", emails);
       return res.status(400).json({ error: "emails must be an array" });
-    }
-
-    if (!openAiApiKey) {
-      return res.status(400).json({ error: "OpenAI API key is required!" });
     }
 
     // Check if emails is empty
@@ -29,7 +25,7 @@ export const classifyEmails = async (req, res) => {
           .status(400)
           .json({ error: "emailSubject and emailSnippet are required" });
       }
-      const classificationResult = await classifyEmail(email, openAiApiKey);
+      const classificationResult = await classifyEmail(email);
       labeledEmails.push(classificationResult);
     }
 
@@ -37,11 +33,9 @@ export const classifyEmails = async (req, res) => {
     return res.status(200).json({ labeledEmails });
   } catch (error) {
     console.error("Error classifying emails:", error);
-    return res
-      .status(500)
-      .json({
-        error:
-          error.message || "Internal Server Error. Unable to classify emails.",
-      });
+    return res.status(500).json({
+      error:
+        error.message || "Internal Server Error. Unable to classify emails.",
+    });
   }
 };

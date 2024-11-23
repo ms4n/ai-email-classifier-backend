@@ -7,7 +7,8 @@ export const googleAuth = passport.authenticate("google", {
 });
 
 export const googleCallback = passport.authenticate("google", {
-  failureRedirect: `${process.env.FRONTEND_URL}/`,
+  failureRedirect: `${process.env.FRONTEND_URL}`,
+  successRedirect: `${process.env.FRONTEND_URL}/emails`,
 });
 
 export const logout = (req, res, next) => {
