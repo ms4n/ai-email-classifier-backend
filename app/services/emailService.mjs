@@ -6,8 +6,8 @@ dotenv.config();
 
 const gmail = google.gmail("v1");
 
-// Fetch email IDs for a specified number of emails, default is 15 emails.
-export async function fetchEmails(accessToken, maxResults = 15) {
+// Fetch email IDs for a specified number of emails, default is 5 emails.
+export async function fetchEmails(accessToken, maxResults = 5) {
   try {
     const authClient = new OAuth2Client({
       clientId: process.env.GOOGLE_CLIENT_ID,
